@@ -32,26 +32,26 @@
 
 		<!-- Page Heading/Breadcrumbs -->
 		<h1 class="mt-4 mb-3">
-			Crochet eCommerce <small>Productos</small>
+			Crochet eCommerce <small>[[#{producto.admin}]]</small>
 		</h1>
 
 		<ol class="breadcrumb">
-			<li class="breadcrumb-item"><a href="index.html">Home</a></li>
-			<li class="breadcrumb-item active">Ver Productos</li>
+			<li class="breadcrumb-item"><a th:href="@{/administrador}">[[#{iniciop.usuario}]]</a></li>
+			<li class="breadcrumb-item active">[[#{ver.producto.admin}]]</li>
 		</ol>
 
-		<a class="btn btn-primary" th:href="@{/productos/create}"> Crear
-			Producto</a>
-		<h2>Productos</h2>
+		<a class="btn btn-primary" th:href="@{/productos/create}"> [[#{crear.producto}]]
+			</a>
+		<h2>[[#{producto.admin}]]</h2>
 		<table class="table">
 			<thead>
 				<tr>
-					<th scope="col">Nombre</th>
-					<th scope="col">Descripción</th>
-					<th scope="col">Inventario</th>
-					<th scope="col">Precio</th>
-					<th scope="col">Acción</th>
-					<th scope="col">Acción</th>
+					<th scope="col">[[#{nombre.adminis}]]</th>
+					<th scope="col">[[#{descripcion.adminis}]]</th>
+					<th scope="col">[[#{inventario.admin}]]</th>
+					<th scope="col">[[#{precio.adminis}]]</th>
+					<th scope="col">[[#{accion.carrito}]]</th>
+					<th scope="col">[[#{accion.carrito}]]</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -60,8 +60,8 @@
 					<td  th:text="${producto.descripcion}"></td>
 					<td th:text="${producto.cantidad}"></td>
 					<td th:text="${producto.precio}"></td>
-					<td ><a class="btn btn-warning" th:href="@{productos/edit/{id} (id=${producto.id})}">Editar</a></td>
-					<td ><a class="btn btn-danger" th:href="@{productos/delete/{id} (id=${producto.id})}">Eliminar</a></td>
+					<td ><a class="btn btn-warning" th:href="@{productos/edit/{id} (id=${producto.id})}">[[#{admin.editar}]]</a></td>
+					<td ><a class="btn btn-danger" th:href="@{productos/delete/{id} (id=${producto.id})}">[[#{admin.Eliminar}]]</a></td>
 				</tr>
 			</tbody>
 		</table>

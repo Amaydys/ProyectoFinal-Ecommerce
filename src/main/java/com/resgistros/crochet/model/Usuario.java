@@ -8,6 +8,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Pattern;
 
 
 @Entity
@@ -16,12 +19,22 @@ public class Usuario {
 	@Id 
 	@GeneratedValue( strategy = GenerationType.IDENTITY) 
          private Integer id;
-         private String nombre;
+         
+	
+	     @NotEmpty 
+	   
+	     private String nombre;
          private String username;
+         
+         @NotEmpty 
+         @Email 
+         @Pattern(regexp = "^[A-Za-z0-9._%+-]+@gmail\\.com$", message = "El correo electrónico debe ser una dirección de Gmail válida.")
          private String email;
+         @NotEmpty 
          private String direccion;
          private String telefono;
          private String tipo;
+         @NotEmpty 
          private String password;
          
          @OneToMany(mappedBy = "usuario")

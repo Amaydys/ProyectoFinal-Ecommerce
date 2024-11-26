@@ -23,18 +23,20 @@
 <body>
 
   <!-- Navigation -->
- <div th:include="usuario/template_usuario.html::header"></div>
+ <div th:include="usuario/template_usuario.html::header" th:if="${sesion==null}"></div>
+ <!--cuando  el usuario esta logueado -->
+	<div th:include="usuario/template_usuario.html::header-user" th:unless="${sesion==null}"> </div>
 
     <!-- Page Content -->
     <div class="container">
       <!-- Page Heading/Breadcrumbs -->
       <h1 class="mt-4 mb-3">
-        Crochet eCommerce <small>Resumen de la orden</small>
+        Crochet eCommerce <small>[[#{resumende.orden}]]</small>
       </h1>
 
       <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a th:href="@{/}">Home</a></li>
-        <li class="breadcrumb-item active">Orden</li>
+        <li class="breadcrumb-item"><a th:href="@{/}">[[#{iniciop.usuario}]]</a></li>
+        <li class="breadcrumb-item active">[[#{orden.resumen}]]</li>
       </ol>
 
       <!-- Blog Post -->
@@ -44,23 +46,23 @@
            <div class="col-lg-9">
              <div class="card-body">
               <h5 class="card-title">
-                DATOS ORDEN
+                [[#{datos.resumen}]]
               </h5>
               <h6 th:text=" 'Nombre: '+ ${usuario.nombre}"></h6>
               <h6 th:text="'Correo: '+  ${usuario.email}"></h6>
               <h6 th:text="'Dirección: '+ ${usuario.direccion}"></h6>
 
               <h5 class="card-title">
-                PRODUCTOS
+                [[#{productos.resumen}]]
               </h5>
               <div class="alert alert-light" role="alert">
                 <table class="table">
                   <thead>
                     <tr>
-                      <th scope="col">Producto</th>
-                      <th scope="col">Precio</th>
-                      <th scope="col">Cantidad</th>
-                      <th scope="col">Total</th>
+                      <th scope="col">[[#{producto.carrito}]]</th>
+                      <th scope="col">[[#{precio.carrito}]]</th>
+                      <th scope="col">[[#{cantidad.carrito}]]</th>
+                      <th scope="col">[[#{total.carrito}]]</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -80,11 +82,11 @@
 
 
          <div class="col-lg-3">
-          <h2 class="card-title">Resumen Orden</h2>
+          <h2 class="card-title">[[#{resumen.orden}]]</h2>
 
           <ul class="list-group">
            <li class="list-group-item"><h5 th:text=" 'Total: '+ ${orden.total} "></h5></li>
-            <li><a th:href="@{saveOrder}" class="btn btn-dark">Generar</a></li>
+            <li><a th:href="@{saveOrder}" class="btn btn-dark">[[#{generar.resumen}]]</a></li>
           </ul>
         </div>
       </div>

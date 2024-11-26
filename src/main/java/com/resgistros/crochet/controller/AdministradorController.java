@@ -1,6 +1,8 @@
-package com.resgistros.crochet.controller;
+	package com.resgistros.crochet.controller;
 
 import java.util.List;
+
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.resgistros.crochet.model.Orden;
 import com.resgistros.crochet.model.Producto;
+import com.resgistros.crochet.model.Usuario;
 import com.resgistros.crochet.service.IOrdenService;
 import com.resgistros.crochet.service.IUsuarioService;
 import com.resgistros.crochet.service.ProductoService;
@@ -61,6 +64,15 @@ public class AdministradorController {
 		
 	}
 	
-	
+	@GetMapping("/compras")
+	public String obtenerCompras(Model model, HttpSession session) {
+		model.addAttribute("sesion", session.getAttribute("idusuario"));
+		Usuario usuario= usuarioService.findById(Integer.parseInt(session.getAttribute("idusuario").toString())).get();
+		List<Orden> ordenes= ordensService.findByUsuario(usuario);
+		
+		model.addAttribute("ordenes", ordenes);
+		return "administrador/compras";
+		
+	}
 }
 

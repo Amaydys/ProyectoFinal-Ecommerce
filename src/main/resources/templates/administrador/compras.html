@@ -15,15 +15,15 @@
 <link th:href="@{/vendor/bootstrap/css/bootstrap.min.css}"
 	rel="stylesheet">
 
-<!-- Custom styles for this template -->
+<!-- Custom styles for this template --> 
 <link th:href="@{/css/heroic-features.css}" rel="stylesheet">
 
 </head>
-     
+
 <body>
 
   <!-- Navigation -->
-	<div th:include="administrador/templace_admin.html::header"></div>
+  <div th:include="administrador/templace_admin.html::header"></div>
 
     <!-- Page Content -->
     <div class="container">
@@ -31,13 +31,12 @@
 
       <!-- Page Heading/Breadcrumbs -->
       <h1 class="mt-4 mb-3">
-        Crochet eCommerce <small>[[#{detalle.admin}]]</small>
+        Crochet eCommerce <small>[[#{compras.message}]]</small>
       </h1>
 
       <ol class="breadcrumb">
         <li class="breadcrumb-item"><a th:href="@{/administrador}">[[#{iniciop.usuario}]]</a></li>
-        <li class="breadcrumb-item"><a th:href="@{/administrador/compras}">[[#{compras.message}]]</a></li>
-        <li class="breadcrumb-item active">[[#{detalle.compra.admin}]]</li>
+        <li class="breadcrumb-item active">[[#{compras.message}]]</li>
       </ol>
 
       <!-- Blog Post -->
@@ -48,18 +47,18 @@
             <table class="table">
               <thead>
                 <tr>
-                  <th scope="col">[[#{cantidad.carrito}]]</th>
-                  <th scope="col">[[#{producto.carrito}]]</th>                  
-                  <th scope="col">[[#{precio.carrito}]]</th>
-                  <th scope="col">[[#{total.carrito}]]</th>                  
+                  <th scope="col">[[#{orden.usuario}]]</th>
+                  <th scope="col">[[#{fecha.usuario}]]</th>
+                  <th scope="col">[[#{valor.usuario}]]</th>
+                  <th scope="col">[[#{accion.carrito}]]</th>
                 </tr>
               </thead>
               <tbody>
-                <tr th:each="detalle:${detalles}">
-                  <td th:text="${detalle.cantidad}"></td>
-                  <td th:text="${detalle.nombre}"></td>
-                  <td th:text="${detalle.precio}"></td>
-                  <td th:text="${detalle.total}"></td>
+                <tr th:each="orden: ${ordenes}">
+                  <td th:text="${orden.numero}"></td>
+                  <td th:text="${orden.fechaCreacion}" ></td>
+                  <td th:text="${orden.total}" ></td>
+                  <td><a th:href="@{/administrador/detalle/{id} (id=${orden.id}) }" class="btn btn-success">[[#{detalle.usuario}]]</a></td>
                 </tr>
               </tbody>
             </table>
@@ -71,13 +70,11 @@
   <!-- /.container -->
 
   <!-- Footer -->
-	<div th:include="administrador/templace_admin.html::footer"></div>
+  <div th:include="usuario/template_usuario.html::footer"></div>
 
 	<!-- Bootstrap core JavaScript -->
 	<script th:src="@{/vendor/jquery/jquery.min.js}"></script>
 	<script th:src="@{/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
-
 </body>
 
 </html>
-

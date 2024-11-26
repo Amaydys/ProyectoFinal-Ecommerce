@@ -32,12 +32,12 @@
 
 		<!-- Page Heading/Breadcrumbs -->
 		<h1 class="mt-4 mb-3">
-			Crochet eCommerce <small>Ordenes</small>
+			Crochet eCommerce <small>[[#{orden.admin}]]</small>
 		</h1>
 
 		<ol class="breadcrumb">
-			<li class="breadcrumb-item"> <a th:href="@{/administrador}">Home</a></li>
-			<li class="breadcrumb-item active">Ordenes</li>
+			<li class="breadcrumb-item"> <a th:href="@{/administrador}">[[#{iniciop.usuario}]]</a></li>
+			<li class="breadcrumb-item active">[[#{orden.admin}]]</li>
 		</ol>
 
 		<!-- Blog Post -->
@@ -48,10 +48,10 @@
 						<table class="table">
 							<thead>
 								<tr>
-									<th scope="col">No. de Orden</th>
-									<th scope="col">Fecha</th>
-									<th scope="col">Valor</th>
-									<th scope="col">Acción</th>
+									<th scope="col">[[#{orden.usuario}]]</th>
+									<th scope="col">[[#{fecha.usuario}]]</th>
+									<th scope="col">[[#{valor.usuario}]]</th>
+									<th scope="col">[[#{accion.carrito}]]</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -59,8 +59,7 @@
 									<td th:text="${orden.numero}"></td>
 									<td th:text="${orden.fechaCreacion}"></td>
 									<td th:text="${orden.total}"></td>
-									<td><a th:href="@{/administrador/detalle/{id} (id=${orden.id}) }" class="btn btn-success">Ver
-											Detalle</a></td>
+									<td><a th:href="@{/administrador/detalle/{id} (id=${orden.id}) }" class="btn btn-success">[[#{detalle.usuario}]]</a></td>
 								</tr>
 							</tbody>
 						</table>

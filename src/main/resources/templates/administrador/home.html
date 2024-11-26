@@ -30,8 +30,8 @@
 
 		<!-- Jumbotron Header -->
 		<header class="jumbotron my-4">
-			<h5 class="display-6">¡Bienvenidos a todos los amantes de los productos hechos a mano en crochet!</h5>
-			<p class="lead">Tu tienda de productos en Línea </p>
+			<h5 class="display-6">[[#{mensaje.bienvenida}]]</h5>
+			<p class="lead">[[#{mensaje.two}]]</p>
 		</header>
 
 		<!-- Page Features -->
@@ -46,8 +46,7 @@
 						<p class="card-text" th:text="${producto.nombre}"></p>
 					</div>
 					<div class="card-footer">
-						<a href="#" class="btn btn-success">Ver
-							producto</a>
+						<a href="#" class="btn btn-success">[[#{ver.producto}]]</a>
 					</div>
 				</div>
 			</div>

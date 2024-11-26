@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Optional;
 
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,7 +13,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -40,13 +44,17 @@ public class UsuarioController {
 	// para que me muestre la pagina de registro en la parte inferior,
 	// usuario/registro
 	@GetMapping("/registro")
-	public String create() {
+	public String mostrarFormulario(Model model) {
+		model.addAttribute("usuario", new Usuario());
 		return "usuario/registro";
 	}
 
 	// trae los datos ya mapeados Usuario usuario
 	@PostMapping("/save")
-	public String save(Usuario usuario) {
+	public String save(@Valid @ModelAttribute("usuario") Usuario usuario, BindingResult result) {
+		if(result.hasErrors()) {
+			return "usuario/registro";
+		}
 		logger.info("Usuario registro: {}", usuario);
 		usuario.setTipo("USER");
 		usuario.setPassword( passEncode.encode(usuario.getPassword()));

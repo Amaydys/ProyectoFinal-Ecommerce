@@ -24,7 +24,7 @@ public class DetalleOrden {
 	@OneToOne
 	private Orden orden;
 	
-	@ManyToOne 
+	@OneToOne 
 	private Producto producto; 
 	public DetalleOrden() {
 		
@@ -85,6 +85,17 @@ public class DetalleOrden {
 	public String toString() {
 		return "DetalleOrden [id=" + id + ", nombre=" + nombre + ", cantidad=" + cantidad + ", precio=" + precio
 				+ ", total=" + total  + "]";
+	}
+	public DetalleOrden(Integer id, String nombre, double cantidad, double precio, double total, Orden orden,
+			Producto producto) {
+		super();
+		this.id = id;
+		this.nombre = nombre;
+		this.cantidad = cantidad;
+		this.precio = precio;
+		this.total = total;
+		this.orden = orden;
+		this.producto = producto;
 	}
 	
 

@@ -1,10 +1,15 @@
 package com.resgistros.crochet.controller;
 
 import java.util.ArrayList;
+import org.springframework.web.servlet.LocaleResolver;
+import org.springframework.web.servlet.support.RequestContextUtils;
+
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.stream.Collectors;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import java.util.Optional;
@@ -13,6 +18,7 @@ import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,6 +26,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.resgistros.crochet.model.DetalleOrden;
 import com.resgistros.crochet.model.Orden;
@@ -30,9 +37,8 @@ import com.resgistros.crochet.service.IOrdenService;
 import com.resgistros.crochet.service.IUsuarioService;
 import com.resgistros.crochet.service.ProductoService;
 
-
 @Controller
-@RequestMapping("/")
+@RequestMapping("")
 public class HomeController {
 
 	private final Logger log = LoggerFactory.getLogger(HomeController.class);
@@ -56,8 +62,8 @@ public class HomeController {
 	// datos de la orden
 	Orden orden = new Orden();
 
-	@GetMapping("")
-	public String home(Model model, HttpSession session) {
+	@GetMapping("/")
+	public String home(@RequestParam(required = false) String lang, Model model, HttpSession session) {
 		
 		log.info("Sesion del usuario: {}", session.getAttribute("idusuario"));
 		
@@ -65,28 +71,52 @@ public class HomeController {
 		
 		//session
 		model.addAttribute("sesion", session.getAttribute("idusuario"));
-
+        
+		if (lang != null) {
+			Locale locale = new Locale(lang);
+			Locale.setDefault(locale);
+		}
+		
 		return "usuario/home";
 	}
-
 	@GetMapping("productohome/{id}")
-	public String productoHome(@PathVariable Integer id, Model model) {
-		log.info("Id producto enviado como parámetro {}", id);
-		Producto producto = new Producto();
-		Optional<Producto> productoOptional = productoService.get(id);
-		producto = productoOptional.get();
+	public String productoHome(@PathVariable Integer id, Model model, HttpSession session,@RequestParam(name = "lang", required = false) String lang, HttpServletRequest request) {
+	    log.info("Id producto enviado como parámetro {}", id);
+	    if (lang != null) {
+	        Locale locale = new Locale(lang);
+	        LocaleContextHolder.setLocale(locale);  // Actualizamos el idioma global
+	    }
+	    if (session.getAttribute("idusuario") == null) {
+	        // Redirige a la página de inicio de sesión si no hay sesión
+	       
+	    }
+	    
+	    
+	    Optional<Producto> productoOptional = productoService.get(id);
 
-		model.addAttribute("producto", producto);
+	    if (productoOptional.isPresent()) {
+	        model.addAttribute("producto", productoOptional.get());
+	    }
 
-		return "usuario/productohome";
+	    // Agregar el usuario de la sesión al modelo
+	    model.addAttribute("sesion", session.getAttribute("idusuario"));
+
+	    return "usuario/productohome";
 	}
 
 	@PostMapping("/cart")
-	public String addCart(@RequestParam Integer id, @RequestParam Integer cantidad, Model model) {
-		DetalleOrden detalleOrden = new DetalleOrden();
+	public String addCart(@RequestParam Integer id, @RequestParam Integer cantidad, Model model, HttpSession session) {
+		Integer userId = (Integer) session.getAttribute("idusuario");  
+    if (userId == null) {  
+        // User is not logged in, redirect to login page  
+        return "usuario/login"; // Ensure this path is correct for your login page  
+    }  
+		
+	    DetalleOrden detalleOrden = new DetalleOrden();
 		Producto producto = new Producto();
 		double sumaTotal = 0;
 
+		
 		Optional<Producto> optionalProducto = productoService.get(id);
 		log.info("Producto añadido: {}", optionalProducto.get());
 		log.info("Cantidad: {}", cantidad);
@@ -112,13 +142,16 @@ public class HomeController {
 		orden.setTotal(sumaTotal);
 		model.addAttribute("cart", detalles);
 		model.addAttribute("orden", orden);
+		model.addAttribute("sesion", session.getAttribute("idusuario"));
 
 		return "usuario/carrito";
 	}
+	
 
+	  
 	// quitar un producto del carrito
 	@GetMapping("/delete/cart/{id}")
-	public String deleteProductoCart(@PathVariable Integer id, Model model) {
+	public String deleteProductoCart(@PathVariable Integer id, Model model, HttpSession session) {
 
 		// lista nueva de prodcutos
 		List<DetalleOrden> ordenesNueva = new ArrayList<DetalleOrden>();
@@ -138,13 +171,18 @@ public class HomeController {
 		orden.setTotal(sumaTotal);
 		model.addAttribute("cart", detalles);
 		model.addAttribute("orden", orden);
-
+		model.addAttribute("sesion", session.getAttribute("idusuario"));
 		return "usuario/carrito";
 	}
 	
 	@GetMapping("/getCart")
 	public String getCart(Model model, HttpSession session) {
 		
+		Integer userId = (Integer) session.getAttribute("idusuario");  
+	    if (userId == null) {  
+	        // User is not logged in, redirect to login page  
+	        return "usuario/login"; // Ensure this path is correct for your login page  
+	    }  
 		model.addAttribute("cart", detalles);
 		model.addAttribute("orden", orden);
 		
@@ -161,7 +199,7 @@ public class HomeController {
 		model.addAttribute("cart", detalles);
 		model.addAttribute("orden", orden);
 		model.addAttribute("usuario", usuario);
-		
+		model.addAttribute("sesion", usuario);
 		return "usuario/resumenorden";
 	}
 	
@@ -173,7 +211,7 @@ public class HomeController {
 		orden.setNumero(ordenService.generarNumeroOrden());
 		
 		//usuario
-		Usuario usuario =usuarioService.findById( Integer.parseInt(session.getAttribute("idusuario").toString())  ).get();
+		Usuario usuario =usuarioService.findById( Integer.parseInt(session.getAttribute("idusuario").toString())).get();
 		
 		orden.setUsuario(usuario);
 		ordenService.save(orden);

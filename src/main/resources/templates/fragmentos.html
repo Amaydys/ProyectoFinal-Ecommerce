@@ -1,0 +1,39 @@
+<!-- src/main/resources/templates/fragments.html -->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Fragmentos de idioma</title>
+</head>
+<body>
+    <div class="collapse navbar-collapse" id="navbarResponsive">
+	<ul class="navbar-nav ml-auto">
+    <li class="nav-item dropdown">
+    <div th:fragment="languageSelector">
+    <form th:action="@{/changeLanguage}" method="get">
+            <select id="lang" name="lang" onchange="changeLanguage(this.value)" style="background-color: #1F3438; color: white;">
+                <option value="es" th:selected="${#locale.language == 'es'}">Español</option>
+                <option value="en" th:selected="${#locale.language == 'en'}">English</option>
+                <option value="fr" th:selected="${#locale.language == 'fr'}">Français</option>
+            </select>
+           <script>  
+    function changeLanguage(lang) {  
+        const currentUrl = new URL(window.location.href);  
+        currentUrl.searchParams.set('lang', lang); // Cambiar el valor de lang  
+        window.location.href = currentUrl; // Redirigir a la nueva URL  
+    }  
+    
+    
+    
+    
+</script>
+
+     </form>       
+    </div>
+    </li>
+    </ul>
+    </div>
+
+    
+
+</body>
+</html>

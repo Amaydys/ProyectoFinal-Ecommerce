@@ -15,7 +15,7 @@
 <link th:href="@{/vendor/bootstrap/css/bootstrap.min.css}"
 	rel="stylesheet">
 
-<!-- Custom styles for this template -->
+<!-- Custom styles for this template --> 
 <link th:href="@{/css/heroic-features.css}" rel="stylesheet">
 
 </head>
@@ -34,12 +34,12 @@
 
       <!-- Page Heading/Breadcrumbs -->
       <h1 class="mt-4 mb-3">
-        Crochet eCommerce <small>Compras</small>
+        Crochet eCommerce <small>[[#{compras.message}]]</small>
       </h1>
 
       <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a th:href="@{/}">Home</a></li>
-        <li class="breadcrumb-item active">Compras</li>
+        <li class="breadcrumb-item"><a th:href="@{/}">[[#{iniciop.usuario}]]</a></li>
+        <li class="breadcrumb-item active">[[#{compras.message}]]</li>
       </ol>
 
       <!-- Blog Post -->
@@ -50,10 +50,10 @@
             <table class="table">
               <thead>
                 <tr>
-                  <th scope="col">No. de Orden</th>
-                  <th scope="col">Fecha</th>
-                  <th scope="col">Valor</th>
-                  <th scope="col">Acción</th>
+                  <th scope="col">[[#{orden.usuario}]]</th>
+                  <th scope="col">[[#{fecha.usuario}]]</th>
+                  <th scope="col">[[#{valor.usuario}]]</th>
+                  <th scope="col">[[#{accion.carrito}]]</th>
                 </tr>
               </thead>
               <tbody>
@@ -61,7 +61,7 @@
                   <td th:text="${orden.numero}"></td>
                   <td th:text="${orden.fechaCreacion}" ></td>
                   <td th:text="${orden.total}" ></td>
-                  <td><a th:href="@{/usuario/detalle/{id} (id=${orden.id}) }" class="btn btn-success">Ver Detalle</a></td>
+                  <td><a th:href="@{/usuario/detalle/{id} (id=${orden.id}) }" class="btn btn-success">[[#{detalle.usuario}]]</a></td>
                 </tr>
               </tbody>
             </table>

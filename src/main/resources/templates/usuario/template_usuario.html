@@ -31,9 +31,10 @@
 
 				<form class="form-inline my-2 my-lg-0" method="post" th:action="@{/search}">
 					<input class="form-control mr-sm-2" type="search"
-						placeholder="Buscar" aria-label="Search" name="nombre"
+						placeholder="buscar" aria-label="Search" name="nombre"
 						autocomplete="off">
-					<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Buscar</button>
+					<button class="btn btn-outline-success my-2 my-sm-0" type="submit">
+				  <p >[[#{searchButton.message}]]</p></button>
 				</form>
 
 
@@ -44,9 +45,16 @@
 				</button>
 				<div class="collapse navbar-collapse" id="navbarResponsive">
 					<ul class="navbar-nav ml-auto">
-						<li class="nav-item"><a class="nav-link" th:href="@{/getCart}">Carrito</a></li>
-						<li class="nav-item"><a class="nav-link" th:href="@{/usuario/login}">Login</a></li>
-					</ul>
+					
+  		
+					
+						<li class="nav-item"><a class="nav-link" th:href="@{/getCart}">[[#{cartLink.message}]]</a></li>
+						<li class="nav-item"><a class="nav-link" th:href="@{/usuario/login}">[[#{loginLink.message}]]</a></li>
+						 <li class="nav-item">
+						 <div th:replace="fragmentos :: languageSelector"></div>
+						 </li>
+    
+					
 				</div>
 			</div>
 		</nav>
@@ -64,7 +72,7 @@
 				<input class="form-control mr-sm-2" type="search"
 					placeholder="Buscar" aria-label="Search" name="nombre"
 					autocomplete="off">
-				<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Buscar</button>
+				<button class="btn btn-outline-success my-2 my-sm-0" type="submit">[[#{searchButton.message}]]</button>
 			</form>
 
 
@@ -78,14 +86,18 @@
 					<li class="nav-item dropdown"><a
 							class="nav-link dropdown-toggle" href="#"
 							id="navbarDropdownMenuLink" role="button" data-toggle="dropdown"
-							aria-haspopup="true" aria-expanded="false"> USER </a>
+							aria-haspopup="true" aria-expanded="false"> [[#{usuario.message}]] </a>
 							
 							<div class="dropdown-menu"
 								aria-labelledby="navbarDropdownMenuLink">
-								<a class="dropdown-item" th:href="@{/usuario/compras}">Compras</a>
-								<a class="dropdown-item" th:href="@{/getCart}">Carrito</a> 
-								<a class="dropdown-item" th:href="@{/usuario/cerrar}">Salir</a> 
+								<a class="dropdown-item" th:href="@{/usuario/compras}">[[#{compras.message}]]</a>
+								<a class="dropdown-item" th:href="@{/getCart}">[[#{carrito.message}]]</a> 
+								<a class="dropdown-item" th:href="@{/usuario/cerrar}">[[#{salir.message}]]</a> 
 							</div></li>
+							<li >
+			                 <div th:replace="fragmentos :: languageSelector"></div>
+			         </li>
+							
 				</ul>
 			</div>
 		</div>
@@ -98,9 +110,9 @@
 	<div th:fragment="footer">
     <footer class="py-5 bg-dark">
         <div class="container"> 
-            <p class="m-0 text-center text-white">Crochet eCommerce</p>
-            <p class="m-0 text-center text-white">Gmail: amaydys@gmail.com</p>
-            <p class="m-0 text-center text-white">Numero de celular: 3452345230</p>
+            <p class="m-0 text-center text-white">[[#{nombre.tienda}]]</p>
+            <p class="m-0 text-center text-white">[[#{correo.electronico}]]</p>
+            <p class="m-0 text-center text-white">[[#{numero.celular}]]</p>
         </div>
          <div class="social-icons text-center">
                 <a href="https://www.facebook.com"><i class="fab fa-facebook-f"></i></a>

@@ -11,6 +11,7 @@ import org.slf4j.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,6 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.resgistros.crochet.model.Producto;
 import com.resgistros.crochet.model.Usuario;
+import com.resgistros.crochet.repository.IProductoRepository;
 import com.resgistros.crochet.service.IUsuarioService;
 import com.resgistros.crochet.service.ProductoService;
 import com.resgistros.crochet.service.UploadFileService;
@@ -83,7 +85,19 @@ public class ProductoController {
 
         return "productos/edit";
     }
+    
 
+    
+    
+    @GetMapping("/delete/{id}")
+    public String delete(@PathVariable Integer id) {
+    	
+		productoService.delete(id);
+		return "redirect:/productos";
+	}
+   
+    
+ 
     @PostMapping("/update")
     public String update(Producto producto, @RequestParam("img") MultipartFile file) throws IOException {
     	 Producto p = new Producto();
@@ -106,21 +120,7 @@ public class ProductoController {
         productoService.update(producto);
         return "redirect:/productos";
     }
-
-    @GetMapping("/delete/{id}")
-    public String delete(@PathVariable Integer id) {
-        Producto p = new Producto();
-        p = productoService.get(id).get();
-
-        
-        // eliminar cuando no sea la imagen
-        if (!p.getImagen().equals("default.jpg")) {
-            Upload.deleteImage(p.getImagen());
-        }
-
-        productoService.delete(id);
-        return "redirect:/productos";
-
-  }
     
+
 }
+    

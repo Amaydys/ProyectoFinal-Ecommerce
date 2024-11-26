@@ -1,5 +1,6 @@
 package com.resgistros.crochet.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -24,11 +25,10 @@ public class Producto {
 	private Usuario usuario;
 	
 	public Producto() {
-		
+
 	}
 
 	
-
 	public Producto(Integer id, String nombre, String descripcion, String imagen, double precio, int cantidad,
 			Usuario usuario) {
 		super();
@@ -68,9 +68,6 @@ public class Producto {
 	}
 
 	public String getImagen() {
-		if (imagen == null) {
-	        return "";
-		}
 		return imagen;
 	}
 

@@ -26,7 +26,10 @@ public class SpringBootSecurity extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		// para identificar codigo malicioso csrf
-		http.csrf().disable().authorizeRequests()
+		http.csrf().disable().authorizeRequests() 
+        .antMatchers("/changeLanguage").permitAll() // Permitir acceso a esta URL  
+        
+		
 		.antMatchers("/administrador/**").hasRole("ADMIN")
 		.antMatchers("/productos/**").hasRole("ADMIN")
 		.and().formLogin().loginPage("/usuario/login")
